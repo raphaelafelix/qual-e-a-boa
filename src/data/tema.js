@@ -1,17 +1,21 @@
+// ===========================================
+// PALETA DE CORES DO NOSSO APP
+// ===========================================
+
 export const cores = {
-    // --- fundos ---
+    // ---- Fundos ----
     fundo: "#121212",
     fundoCard: "#1e1e1e",
 
-    // -- cores de destaque ---
+    // --- Cores de destaque ----
     roxo: "#7f5af0",
     verde: "#2cb67d",
 
-    // -- textos --
+    // --- Textos ----
     textoPrincipal: "#FFFFFF",
     textoSecundario: "#A0A0A0",
 
-    // -- detalhes --
-    borda: "#2a2a2a"
+    // --- Detalhes -----
+    borda: "#2a2a2a",
     // linha fininha em volta dos itens da lista
 };
