@@ -27,4 +27,65 @@ const TEMPO_ENTRE_SORTEIOS = 1000; // MILISSEGUNDOS: 1000 = 1 segundo
 
 
     // Função SORTEAr 
+
+    function sortear(){
+        if (opcoes.length < 2){
+            setResultado("Adicione pelo menos 2 opções!");
+            return
+
+            // como sortear uma posição da lista;
+        const posicao = Math.floor(Math.random()  * opcoes.length);
+
+        const opcaoSorteada = opcoes[posicao];
+        setResultado(opcaoSorteada)
+
+
+        // aqui faz o celular vibrar avisando que saiu o resultado
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
+        }
+
+        function adicionar(){
+            const nome = textoDigitado.trim();
+
+            if (nome === "") {
+                return;
+            }
+
+            const listaNova = [...opcoes, nome];
+            setOpcoes(listaNova);
+            setTextoDigitado("");
+        }
+
+        // função de remover uma opção
+        function remover(nomeParaRemover){
+
+            const listaNova = opcoes.filter((opcao) => opcao !== nomeParaRemover);
+            setOpcoes(listaNova);
+        }
+
+        useEffect(() => {
+
+            Accelerometer.setUpdateInterval(100);
+
+            // guarda a hora do ultimo sorteio
+            let horaDoUltimoSorteio = 0;
+
+            const sensor = Accelerometer.addListener((dados) => {
+                const forca = Math.hypot(dados.x, dados.y, dados.z);
+                const agora = Date.now();
+                const tempoPassado = agora - horaDoUltimoSorteio;
+
+
+                // 1 - chacoalhou forte
+                if (forca > LIMITE_DE_FORCA && tempoPassado > TEMPO_ENTRE_SORTEIOS){
+                    horaDoUltimoSorteio = agora;
+                    sortear();
+                }
+            });
+
+            return () => sensor.remove();
+
+        }, [opcoes]);
+        
+    }
  }
